@@ -60,21 +60,6 @@ else
     exit 1
 fi
 
-# Check if default shell is zsh
-if [ "$SHELL" = "$(which zsh)" ]; then
-    echo "Default shell is already zsh"
-else
-    echo "Default shell is not zsh"
-
-    cp ".zshrc" "$HOME/.zshrc"
-    
-    # Change default shell to zsh
-    echo "Changing default shell to zsh..."
-    chsh -s $(which zsh)
-    echo "Changing current shell to zsh..."
-    exec zsh
-fi
-
 # Install Dependencies
 # TODO: Add dependencies
 
@@ -107,6 +92,21 @@ else
     echo "No existing .zshrc found. Copying new .zshrc..."
     cp ".zshrc" "$HOME/.zshrc"
     echo ".zshrc has been created"
+fi
+
+# Check if default shell is zsh
+if [ "$SHELL" = "$(which zsh)" ]; then
+    echo "Default shell is already zsh"
+else
+    echo "Default shell is not zsh"
+
+    cp ".zshrc" "$HOME/.zshrc"
+    
+    # Change default shell to zsh
+    echo "Changing default shell to zsh..."
+    chsh -s $(which zsh)
+    echo "Changing current shell to zsh..."
+    exec zsh
 fi
 
 # Install theme
