@@ -61,7 +61,11 @@ else
 fi
 
 # Install Dependencies
-# TODO: Add dependencies
+if [[ "$OS_TYPE" == "linux" ]]; then
+    ./installs/install_ubuntu.sh
+elif [[ "$OS_TYPE" == "macos" ]]; then
+    ./installs/install_mac.sh
+fi
 
 # Check if Oh My Zsh is installed
 if [ -d "$HOME/.oh-my-zsh" ]; then
@@ -179,6 +183,8 @@ if [[ $REPLY =~ ^[Yy]$ ]]; then
     asdf install direnv latest
     asdf global direnv latest
 
+    asdf direnv setup --shell zsh --version latest
+
     pip3 install virtualenv
     
     # Add configuration to .zshrc if not already present
@@ -188,6 +194,7 @@ if [[ $REPLY =~ ^[Yy]$ ]]; then
         echo "# Virtualenv configuration" >> "$HOME/.zshrc"
         echo "export ENV_HOME=\"\$HOME/.virtualenvs\"" >> "$HOME/.zshrc"
         echo "source \$ENV_HOME/virtualenv.sh" >> "$HOME/.zshrc"
+        echo "export VIRTUAL_ENV_DISABLE_PROMPT=1" >> "$HOME/.zshrc"
     else
         echo "Virtualenv configuration already exists in .zshrc"
     fi

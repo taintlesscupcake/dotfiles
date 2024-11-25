@@ -1,0 +1,35 @@
+# Working directory
+if [ -f ~/.working_dir ]; then
+    source ~/.working_dir
+else
+    export WORKING_DIR="$HOME"
+fi
+
+# System shortcuts
+alias x="exit"
+
+# Directory shortcuts
+alias h='cd ~'
+alias cwd='cd $WORKING_DIR'
+alias swd='echo "export WORKING_DIR=\"$PWD\"" > ~/.working_dir && source ~/.working_dir'
+
+# Git Aliases
+alias add="git add"
+alias commit="git commit"
+alias pull="git pull"
+alias stat="git status"
+alias gdiff="git diff HEAD"
+alias vdiff="git difftool HEAD"
+alias log="git log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit"
+alias cfg="git --git-dir=$HOME/dotfiles/ --work-tree=$HOME"
+alias push="git push"
+
+# Utility shortcuts
+alias df='df -h'
+alias du='du -h'
+alias free='free -h'
+alias grep='grep --color=auto'
+
+# Network shortcuts
+alias myip='curl http://ipecho.net/plain'
+alias ping='ping -c 5'

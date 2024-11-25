@@ -1,0 +1,4 @@
+layout_env() {
+	#export VIRTUAL_ENV="$WORKON_HOME"/"$1"
+	source "$WORKON_HOME"/"$1"/bin/activate
+}
