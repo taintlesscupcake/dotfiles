@@ -94,6 +94,13 @@ else
     echo ".zshrc has been created"
 fi
 
+# Install theme
+cp "minimal.zsh-theme" "$HOME/.oh-my-zsh/themes/minimal.zsh-theme"
+
+# Install zsh plugins
+git clone https://github.com/zsh-users/zsh-autosuggestions.git "$HOME/.oh-my-zsh/custom/plugins/zsh-autosuggestions"
+git clone https://github.com/zsh-users/zsh-syntax-highlighting.git "$HOME/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting"
+
 # Check if default shell is zsh
 if [ "$SHELL" = "$(which zsh)" ]; then
     echo "Default shell is already zsh"
@@ -106,17 +113,8 @@ else
     echo "Changing default shell to zsh..."
     chsh -s $(which zsh)
     echo "Changing current shell to zsh..."
-    exec zsh
+    exec zsh -l
 fi
-
-# Install theme
-cp "minimal.zsh-theme" "$HOME/.oh-my-zsh/themes/minimal.zsh-theme"
-
-exec zsh
-
-# Install zsh plugins
-git clone https://github.com/zsh-users/zsh-autosuggestions.git $ZSH_CUSTOM/plugins/zsh-autosuggestions
-git clone https://github.com/zsh-users/zsh-syntax-highlighting.git $ZSH_CUSTOM/plugins/zsh-syntax-highlighting
 
 # Install autojump
 if command -v autojump &> /dev/null || [ -d "$HOME/.autojump" ]; then
@@ -148,7 +146,7 @@ else
     echo "asdf installation completed"
 fi
 
-exec zsh
+exec zsh -l
 
 # Check is asdf installed correctly
 if [ -d "$HOME/.asdf" ]; then
@@ -198,5 +196,3 @@ if [[ $REPLY =~ ^[Yy]$ ]]; then
     
     echo "Custom virtualenv installation completed"
 fi
-
-exec zsh
