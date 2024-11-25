@@ -112,8 +112,6 @@ else
     # Change default shell to zsh
     echo "Changing default shell to zsh..."
     chsh -s $(which zsh)
-    echo "Changing current shell to zsh..."
-    exec zsh -l
 fi
 
 # Install autojump
@@ -146,7 +144,7 @@ else
     echo "asdf installation completed"
 fi
 
-exec zsh -l
+. "$HOME/.asdf/asdf.sh"
 
 # Check is asdf installed correctly
 if [ -d "$HOME/.asdf" ]; then
