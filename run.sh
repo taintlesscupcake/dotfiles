@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 # Check operating system
 if [[ "$OSTYPE" == "darwin"* ]]; then
@@ -65,6 +65,8 @@ if [ "$SHELL" = "$(which zsh)" ]; then
     echo "Default shell is already zsh"
 else
     echo "Default shell is not zsh"
+
+    cp ".zshrc" "$HOME/.zshrc"
     
     # Change default shell to zsh
     echo "Changing default shell to zsh..."
@@ -109,6 +111,8 @@ fi
 
 # Install theme
 cp "minimal.zsh-theme" "$HOME/.oh-my-zsh/themes/minimal.zsh-theme"
+
+exec zsh
 
 # Install zsh plugins
 git clone https://github.com/zsh-users/zsh-autosuggestions.git $ZSH_CUSTOM/plugins/zsh-autosuggestions
