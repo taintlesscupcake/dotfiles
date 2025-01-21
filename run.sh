@@ -201,3 +201,7 @@ if [[ $REPLY =~ ^[Yy]$ ]]; then
     
     echo "Custom virtualenv installation completed"
 fi
+
+# Copy .aliases to ~/.aliases
+cp ".aliases" "$HOME/.aliases"
+

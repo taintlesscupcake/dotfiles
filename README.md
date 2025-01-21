@@ -13,8 +13,8 @@ My personal dotfiles and setup scripts for development environment configuration
 ## Quick Start
 
 ```bash
-git clone https://github.com/taintlesscupcake/virtualenv
-cd virtualenv
+git clone https://github.com/taintlesscupcake/dotfiles
+cd dotfiles
 ./run.sh
 ```
 
