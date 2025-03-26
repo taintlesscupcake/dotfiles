@@ -11,9 +11,11 @@ plugins=(
   bgnotify
   zsh-autosuggestions
   zsh-syntax-highlighting
-  asdf
 )
 
 source "$HOME/.aliases"
 
 source $ZSH/oh-my-zsh.sh
+
+# Activate mise
+eval "$("$HOME/.local/bin/mise" activate zsh)"
