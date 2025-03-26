@@ -145,7 +145,7 @@ if [[ $REPLY =~ ^[Yy]$ ]]; then
     git clone https://github.com/taintlesscupcake/virtualenv "$HOME/.virtualenvs"
 
     if ! grep -q "export ENV_HOME=" "$HOME/.zshrc"; then
-        echo "\n# Virtualenv configuration" >> "$HOME/.zshrc"
+        echo "# Virtualenv configuration" >> "$HOME/.zshrc"
         echo "export ENV_HOME=\"\$HOME/.virtualenvs\"" >> "$HOME/.zshrc"
         echo "source \$ENV_HOME/virtualenv.sh" >> "$HOME/.zshrc"
         echo "export VIRTUAL_ENV_DISABLE_PROMPT=1" >> "$HOME/.zshrc"
