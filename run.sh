@@ -131,6 +131,8 @@ eval "$("$HOME/.local/bin/mise" activate bash)"
 mise use --global python@3
 mise use --global direnv
 
+mise reshim
+
 # Install virtualenv
 pip install virtualenv
 
