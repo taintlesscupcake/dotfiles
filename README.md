@@ -29,7 +29,7 @@ cd dotfiles
   - autojump for quick navigation
 
 ### Development Tools
-- **asdf**: Version manager for runtime environments
+- **mise**: Version manager for runtime environments
 - **Homebrew** (macOS)
 - **Python Environment**:
   - [Custom virtualenv setup](https://github.com/taintlesscupcake/virtualenv) (optional)
