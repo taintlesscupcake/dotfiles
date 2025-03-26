@@ -125,7 +125,7 @@ if ! command -v mise &> /dev/null; then
 fi
 
 # Activate mise
-eval "$("$HOME/.local/bin/mise" activate zsh)"
+eval "$("$HOME/.local/bin/mise" activate bash)"
 
 # Install latest Python and direnv with mise
 mise use --global python@3
