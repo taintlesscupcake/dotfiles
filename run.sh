@@ -131,10 +131,8 @@ eval "$("$HOME/.local/bin/mise" activate bash)"
 mise use --global python@3
 mise use --global direnv
 
-mise reshim
-
 # Install virtualenv
-pip install virtualenv
+mise x python@3 -- pip install virtualenv
 
 # Virtualenv Setup (optional)
 read -p "Do you want to install custom virtualenv? (y/n) " -n 1 -r
