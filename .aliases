@@ -15,6 +15,7 @@ alias swd='echo "export WORKING_DIR=\"$PWD\"" > ~/.working_dir && source ~/.work
 
 # Git Aliases
 alias add="git add"
+alias adda="git add -A"
 alias commit="git commit"
 alias pull="git pull"
 alias stat="git status"
@@ -22,7 +23,7 @@ alias gdiff="git diff HEAD"
 alias vdiff="git difftool HEAD"
 alias log="git log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit"
 alias cfg="git --git-dir=$HOME/dotfiles/ --work-tree=$HOME"
-alias push="git push"
+alias gcm="git commit -m"
 
 # Utility shortcuts
 alias df='df -h'
@@ -33,3 +34,15 @@ alias grep='grep --color=auto'
 # Network shortcuts
 alias myip='curl http://ipecho.net/plain'
 alias ping='ping -c 5'
+
+# Kubernetes shortcuts
+alias k="kubectl"
+alias kgp="kubectl get pods"
+alias kgpa="kubectl get pods -A"
+alias kgs="kubectl get services"
+alias kgsa="kubectl get services -A"
+alias kgn="kubectl get nodes"
+alias kgi="kubectl get ingress"
+alias kgia="kubectl get ingress -A"
+alias kgr="kubectl get roles"
+alias kgn="kubectl get namespaces"
