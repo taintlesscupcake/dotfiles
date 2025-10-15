@@ -5,9 +5,10 @@ My personal dotfiles and setup scripts for development environment configuration
 ## What's Included
 
 - Custom Zsh configuration with Oh My Zsh
-- Minimal terminal theme
+- Minimal terminal theme with Git status and virtual environment support
 - Essential development tools setup
 - Python development environment with [custom virtualenv](https://github.com/taintlesscupcake/virtualenv)
+- Modern CLI tools: eza, bat, fzf, zoxide, mcfly, yazi, just
 - Cross-platform support (macOS & Debian-based Linux)
 
 ## Quick Start
@@ -22,18 +23,31 @@ cd dotfiles
 
 ### Shell Environment
 - **Zsh** with Oh My Zsh framework
-- Custom minimal theme for clean interface
+- Custom minimal theme for clean interface with Git status and virtual environment display
 - Plugins:
   - zsh-autosuggestions
   - zsh-syntax-highlighting
-  - autojump for quick navigation
+  - fzf-tab for fuzzy completion
+  - you-should-use for command suggestions
+  - zsh-hangul for Korean input support
+  - urltools for URL manipulation
+  - bgnotify for background notifications
 
 ### Development Tools
 - **mise**: Version manager for runtime environments
 - **Homebrew** (macOS)
+- **Modern CLI Tools**:
+  - eza: Modern ls replacement with Git integration
+  - bat: Enhanced cat with syntax highlighting
+  - fzf: Fuzzy finder for command line
+  - zoxide: Smart cd command
+  - mcfly: Intelligent command history search
+  - yazi: Terminal file manager
+  - just: Command runner
 - **Python Environment**:
   - [Custom virtualenv setup](https://github.com/taintlesscupcake/virtualenv) (optional)
   - direnv integration
+- **Editor**: Neovim as default editor
 
 ## Platform Support
 
@@ -60,8 +74,13 @@ cd dotfiles
 Feel free to fork this repository and modify the configurations to match your preferences. The main configuration files are:
 
 - `.zshrc`: Shell configuration
+- `.aliases`: Command aliases and shortcuts
+- `.direnvrc`: direnv configuration
 - `minimal.zsh-theme`: Terminal theme
-- `run.sh`: Installation script
+- `run.sh`: Main installation script
+- `scripts/install_mac.sh`: macOS-specific system package installations
+- `scripts/install_ubuntu.sh`: Ubuntu/Debian-specific system package installations
+- `scripts/utils.sh`: Common utility functions
 
 ## Backup
 

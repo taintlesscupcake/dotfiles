@@ -1,48 +1,74 @@
-# Working directory
+# =============================================================================
+# Personal Aliases Configuration
+# =============================================================================
+
+# Working Directory Management
+# =============================================================================
 if [ -f ~/.working_dir ]; then
     source ~/.working_dir
 else
     export WORKING_DIR="$HOME"
 fi
 
-# System shortcuts
-alias x="exit"
+# System & Shell Shortcuts
+# =============================================================================
+alias x="exit"                    # Quick exit
+alias h='cd ~'                    # Go to home directory
+alias cwd='cd $WORKING_DIR'       # Go to working directory
+alias swd='echo "export WORKING_DIR=\"$PWD\"" > ~/.working_dir && source ~/.working_dir'  # Set working directory
 
-# Directory shortcuts
-alias h='cd ~'
-alias cwd='cd $WORKING_DIR'
-alias swd='echo "export WORKING_DIR=\"$PWD\"" > ~/.working_dir && source ~/.working_dir'
+# File Operations & Navigation
+# =============================================================================
+alias ls='eza'                    # Modern ls replacement
+alias l='eza -lbF --git'          # List with basic info and git status
+alias ll='eza -lbGF --git'        # List with detailed info and git status
+alias llm='eza -lbGd --git --sort=modified'  # List sorted by modification time
+alias la='eza -lbhHigUmuSa --time-style=long-iso --git --color-scale'  # List all with detailed info
+alias lx='eza -lbhHigUmuSa@ --time-style=long-iso --git --color-scale' # List all with extended attributes
+alias lS='eza -1'                 # List in single column
+alias lt='eza --tree --level=2'   # Tree view (2 levels)
+alias l.="eza -a | grep -E '^\.'" # List hidden files only
 
-# Git Aliases
-alias add="git add"
-alias adda="git add -A"
-alias commit="git commit"
-alias pull="git pull"
-alias stat="git status"
-alias gdiff="git diff HEAD"
-alias vdiff="git difftool HEAD"
-alias log="git log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit"
-alias cfg="git --git-dir=$HOME/dotfiles/ --work-tree=$HOME"
-alias gcm="git commit -m"
+# Enhanced File Operations
+# =============================================================================
+alias cat="bat"                   # Enhanced cat with syntax highlighting
+alias vim="nvim"                  # Use neovim instead of vim
+alias j="just"                    # Just command runner
 
-# Utility shortcuts
-alias df='df -h'
-alias du='du -h'
-alias free='free -h'
-alias grep='grep --color=auto'
+# Git Operations
+# =============================================================================
+alias add="git add"               # Stage files
+alias adda="git add -A"           # Stage all files
+alias commit="git commit"         # Commit changes
+alias pull="git pull"             # Pull changes
+alias stat="git status"           # Show git status
+alias gdiff="git diff HEAD"       # Show diff with HEAD
+alias vdiff="git difftool HEAD"   # Visual diff with HEAD
+alias gcm="git commit -m"         # Quick commit with message
+alias cfg="git --git-dir=$HOME/dotfiles/ --work-tree=$HOME"  # Dotfiles git operations
+alias log="git log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit"  # Pretty git log
 
-# Network shortcuts
-alias myip='curl http://ipecho.net/plain'
-alias ping='ping -c 5'
+# System Information & Utilities
+# =============================================================================
+alias df='df -h'                  # Disk usage in human readable format
+alias du='du -h'                  # Directory usage in human readable format
+alias free='free -h'              # Memory usage in human readable format
+alias grep='grep --color=auto'    # Colored grep output
 
-# Kubernetes shortcuts
-alias k="kubectl"
-alias kgp="kubectl get pods"
-alias kgpa="kubectl get pods -A"
-alias kgs="kubectl get services"
-alias kgsa="kubectl get services -A"
-alias kgn="kubectl get nodes"
-alias kgi="kubectl get ingress"
-alias kgia="kubectl get ingress -A"
-alias kgr="kubectl get roles"
-alias kgn="kubectl get namespaces"
+# Network Operations
+# =============================================================================
+alias myip='curl http://ipecho.net/plain'  # Get external IP address
+alias ping='ping -c 5'            # Ping with 5 packets limit
+
+# Kubernetes Operations
+# =============================================================================
+alias k="kubectl"                 # Kubernetes CLI
+alias kgp="kubectl get pods"      # Get pods
+alias kgpa="kubectl get pods -A"  # Get pods in all namespaces
+alias kgs="kubectl get services"  # Get services
+alias kgsa="kubectl get services -A"  # Get services in all namespaces
+alias kgn="kubectl get nodes"     # Get nodes
+alias kgi="kubectl get ingress"   # Get ingress
+alias kgia="kubectl get ingress -A"  # Get ingress in all namespaces
+alias kgr="kubectl get roles"     # Get roles
+alias kgns="kubectl get namespaces"  # Get namespaces (fixed duplicate alias)
