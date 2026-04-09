@@ -111,10 +111,7 @@ main() {
     
     # Setup mise
     setup_mise
-    
-    # Setup custom virtualenv (optional)
-    setup_custom_virtualenv
-    
+
     # Set default shell
     set_default_shell
     

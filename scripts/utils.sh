@@ -80,20 +80,13 @@ install_ohmyzsh_plugins() {
     # Create custom plugins directory
     mkdir -p "$HOME/.oh-my-zsh/custom/plugins"
     
-    # Define plugins to install
-    declare -A plugins=(
-        ["zsh-autosuggestions"]="https://github.com/zsh-users/zsh-autosuggestions.git"
-        ["zsh-syntax-highlighting"]="https://github.com/zsh-users/zsh-syntax-highlighting.git"
-        ["fzf-tab"]="https://github.com/Aloxaf/fzf-tab.git"
-        ["you-should-use"]="https://github.com/MichaelAquilina/zsh-you-should-use.git"
-        ["zsh-hangul"]="https://github.com/ChoiJinYoung/zsh-hangul.git"
-        ["urltools"]="https://github.com/aperezdc/zsh-urltools.git"
-    )
-    
     # Install each plugin
-    for plugin in "${!plugins[@]}"; do
-        install_ohmyzsh_plugin "$plugin" "${plugins[$plugin]}"
-    done
+    install_ohmyzsh_plugin "zsh-autosuggestions" "https://github.com/zsh-users/zsh-autosuggestions.git"
+    install_ohmyzsh_plugin "zsh-syntax-highlighting" "https://github.com/zsh-users/zsh-syntax-highlighting.git"
+    install_ohmyzsh_plugin "fzf-tab" "https://github.com/Aloxaf/fzf-tab.git"
+    install_ohmyzsh_plugin "you-should-use" "https://github.com/MichaelAquilina/zsh-you-should-use.git"
+    install_ohmyzsh_plugin "zsh-hangul" "https://github.com/gomjellie/zsh-hangul.git"
+
     
     log_success "All Oh My Zsh plugins installed"
 }
@@ -128,33 +121,10 @@ setup_mise() {
     mise use --global python@3
     mise use --global direnv
     
-    # Install virtualenv
-    mise x python@3 -- pip install virtualenv
     
     log_success "mise setup completed"
 }
 
-# Setup custom virtualenv
-setup_custom_virtualenv() {
-    read -p "Do you want to install custom virtualenv? (y/n) " -n 1 -r
-    echo
-    if [[ $REPLY =~ ^[Yy]$ ]]; then
-        if dir_exists "$HOME/.virtualenvs"; then
-            backup_file "$HOME/.virtualenvs"
-        fi
-        
-        log_info "Installing custom virtualenv..."
-        git clone https://github.com/taintlesscupcake/virtualenv "$HOME/.virtualenvs"
-        
-        if ! grep -q "export ENV_HOME=" "$HOME/.zshrc"; then
-            echo "# Virtualenv configuration" >> "$HOME/.zshrc"
-            echo "export ENV_HOME=\"\$HOME/.virtualenvs\"" >> "$HOME/.zshrc"
-            echo "source \$ENV_HOME/virtualenv.sh" >> "$HOME/.zshrc"
-            echo "export VIRTUAL_ENV_DISABLE_PROMPT=1" >> "$HOME/.zshrc"
-            log_success "Added virtualenv configuration to .zshrc"
-        fi
-    fi
-}
 
 # Copy dotfiles
 copy_dotfiles() {

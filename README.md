@@ -7,7 +7,7 @@ My personal dotfiles and setup scripts for development environment configuration
 - Custom Zsh configuration with Oh My Zsh
 - Minimal terminal theme with Git status and virtual environment support
 - Essential development tools setup
-- Python development environment with [custom virtualenv](https://github.com/taintlesscupcake/virtualenv)
+- Python development environment
 - Modern CLI tools: eza, bat, fzf, zoxide, mcfly, yazi, just
 - Cross-platform support (macOS & Debian-based Linux)
 
@@ -45,7 +45,6 @@ cd dotfiles
   - yazi: Terminal file manager
   - just: Command runner
 - **Python Environment**:
-  - [Custom virtualenv setup](https://github.com/taintlesscupcake/virtualenv) (optional)
   - direnv integration
 - **Editor**: Neovim as default editor
 
@@ -86,7 +85,6 @@ Feel free to fork this repository and modify the configurations to match your pr
 
 The script automatically creates backups of:
 - Existing `.zshrc` → `.zshrc_backup`
-- Existing virtualenv configurations
 
 ## License
 
