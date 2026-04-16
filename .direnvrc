@@ -1,4 +1,14 @@
+# shellcheck shell=bash disable=SC1091
 layout_env() {
-	#export VIRTUAL_ENV="$WORKON_HOME"/"$1"
-	source "$WORKON_HOME"/"$1"/bin/activate
+	local env_name="$1"
+	local pvm_home="${PVM_HOME:-$HOME/.pvm}"
+	if [ -f "$pvm_home/pvm.sh" ]; then
+		source "$pvm_home/pvm.sh"
+	fi
+	if type pvm >/dev/null 2>&1 && [ -n "$env_name" ]; then
+		pvm env activate "$env_name"
+	else
+		echo "direnv: pvm is not initialized or environment name is missing" >&2
+		return 1
+	fi
 }

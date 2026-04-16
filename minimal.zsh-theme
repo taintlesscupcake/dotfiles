@@ -6,7 +6,7 @@
 # This theme provides a clean and informative prompt with:
 # - Git status information
 # - SSH connection indicator
-# - Virtual environment display
+# - Active Python environment display
 # - Minimalistic design with unicode characters
 
 ### Segment drawing
@@ -35,7 +35,7 @@ prompt_segment() {
 # End the prompt
 prompt_end() {
   print
-  print -n "$(prepareVirtualEnvInfo)%F{85}${char_arrow}%f "
+  print -n "$(preparePythonEnvInfo)%F{85}${char_arrow}%f "
 }
 
 ### Prompt components
@@ -122,9 +122,10 @@ if [[ -n "$SSH_CLIENT" || -n "$SSH2_CLIENT" ]]; then
   ssh_marker="%F{115}SSH%f%F{236}:%f %F{80}$(hostname)%f"
 fi
 
-# SEGMENT/VIRTUALENV_STATUS ==================================================
+# SEGMENT/PYTHON_ENV_STATUS ==================================================
 
-function prepareVirtualEnvInfo() {
+function preparePythonEnvInfo() {
+  # PVM activation uses the standard VIRTUAL_ENV variable.
   if [[ -n "$VIRTUAL_ENV" ]]; then
     echo "(%F{green}$(basename "$VIRTUAL_ENV")%f) "
   else
@@ -158,7 +159,7 @@ printPsOneLimiter() {
 # ENV/VARIABLES/PROMPT_LINES ===================================================
 
 PROMPT='%F{236}${char_up_and_right_divider} %f%F{80}%~%f${vcs_info_msg_0_}
-$(prepareVirtualEnvInfo)%F{85}${char_arrow}%f '
+$(preparePythonEnvInfo)%F{85}${char_arrow}%f '
 
 RPROMPT='%{${lineup}%}${ssh_marker}%{${linedown}%}'
 

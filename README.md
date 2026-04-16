@@ -5,9 +5,9 @@ My personal dotfiles and setup scripts for development environment configuration
 ## What's Included
 
 - Custom Zsh configuration with Oh My Zsh
-- Minimal terminal theme with Git status and virtual environment support
+- Minimal terminal theme with Git status and active Python environment support
 - Essential development tools setup
-- Python development environment
+- Python development environment with PVM (centralized environment manager built on mise-provisioned tooling)
 - Modern CLI tools: eza, bat, fzf, zoxide, mcfly, yazi, just
 - Cross-platform support (macOS & Debian-based Linux)
 
@@ -23,7 +23,7 @@ cd dotfiles
 
 ### Shell Environment
 - **Zsh** with Oh My Zsh framework
-- Custom minimal theme for clean interface with Git status and virtual environment display
+- Custom minimal theme for clean interface with Git status and active Python environment display
 - Plugins:
   - zsh-autosuggestions
   - zsh-syntax-highlighting
@@ -45,7 +45,8 @@ cd dotfiles
   - yazi: Terminal file manager
   - just: Command runner
 - **Python Environment**:
-  - direnv integration
+  - PVM for centralized Python/version and environment management
+  - direnv integration via `layout_env <name>`
 - **Editor**: Neovim as default editor
 
 ## Platform Support

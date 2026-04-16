@@ -8,7 +8,7 @@
 #   --skip-deps        Skip system package installation
 #   --skip-ohmyzsh     Skip Oh My Zsh and plugin installation
 #   --skip-dotfiles    Skip dotfile deployment (symlinks)
-#   --skip-mise        Skip mise setup
+#   --skip-python      Skip mise and pvm setup
 #   --skip-shell       Skip default shell change
 #   --log-file <path>  Specify log file location
 #   -h, --help         Show this help message
@@ -21,7 +21,7 @@ source "$SCRIPT_DIR/scripts/utils.sh"
 SKIP_DEPS=false
 SKIP_OHMYZSH=false
 SKIP_DOTFILES=false
-SKIP_MISE=false
+SKIP_PYTHON=false
 SKIP_SHELL=false
 
 # Parse command line arguments
@@ -46,8 +46,8 @@ parse_args() {
                 SKIP_DOTFILES=true
                 shift
                 ;;
-            --skip-mise)
-                SKIP_MISE=true
+            --skip-python)
+                SKIP_PYTHON=true
                 shift
                 ;;
             --skip-shell)
@@ -74,7 +74,7 @@ parse_args() {
                 echo "  --skip-deps        Skip system package installation"
                 echo "  --skip-ohmyzsh     Skip Oh My Zsh and plugin installation"
                 echo "  --skip-dotfiles    Skip dotfile deployment (symlinks)"
-                echo "  --skip-mise        Skip mise setup"
+                echo "  --skip-python      Skip mise and pvm setup"
                 echo "  --skip-shell       Skip default shell change"
                 echo "  --log-file <path>  Specify log file location"
                 echo "  -h, --help         Show this help message"
@@ -210,11 +210,11 @@ main() {
         copy_dotfiles
     fi
 
-    # Setup mise
-    if [[ "$SKIP_MISE" == true ]]; then
-        log_info "Skipping mise setup (--skip-mise)"
+    # Setup Python tooling
+    if [[ "$SKIP_PYTHON" == true ]]; then
+        log_info "Skipping Python tooling setup (--skip-python)"
     else
-        setup_mise
+        setup_python_tooling
     fi
 
     # Set default shell

@@ -36,7 +36,9 @@ if [[ "$IS_SUPERUSER" == true ]]; then
         software-properties-common \
         ripgrep \
         fd-find \
-        jq
+        jq \
+        gh \
+        cargo
     
     log_success "System packages installed successfully"
     
@@ -64,8 +66,11 @@ else
         dpkg -i eza.deb || true
         rm eza.deb
     fi
-    
-    log_success "User-space tools installed"
+
+    if ! command_exists cargo; then
+        log_info "Installing Rust toolchain..."
+        curl --proto '=https' --tlsv1.2 -fsSL https://sh.rustup.rs | sh -s -- -y
+    fi
 fi
 
 log_success "Ubuntu/Debian system packages installation completed!"

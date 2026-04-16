@@ -156,8 +156,8 @@ install_ohmyzsh_plugins() {
     log_success "All Oh My Zsh plugins installed"
 }
 
-# Setup mise
-setup_mise() {
+# Setup mise and pvm
+setup_python_tooling() {
     if ! command_exists mise; then
         log_info "Installing mise..."
         if [[ "$OSTYPE" == "darwin"* ]]; then
@@ -174,7 +174,6 @@ setup_mise() {
         log_info "mise already installed"
     fi
 
-    # Ensure mise activate line exists in .zshrc
     local zshrc="$HOME/.zshrc"
     # shellcheck disable=SC2016  # Intentional single quotes: we want literal text in .zshrc
     local mise_activate_line='eval "$(mise activate zsh)"'
@@ -184,7 +183,6 @@ setup_mise() {
             if [[ "$DRY_RUN" == true ]]; then
                 log_dry "Would add mise activate line to $zshrc"
             else
-                # Insert after the oh-my-zsh source line
                 sed -i.bak "/source.*oh-my-zsh\.sh/a\\
 ${mise_activate_line}" "$zshrc" && rm -f "${zshrc}.bak"
                 log_success "Added mise activate to $zshrc"
@@ -194,15 +192,127 @@ ${mise_activate_line}" "$zshrc" && rm -f "${zshrc}.bak"
         fi
     fi
 
-    # Run mise commands to install runtimes (only if mise is available)
     if command_exists mise; then
         log_info "Installing Python and direnv with mise..."
-        run_cmd mise use --global python@3
-        run_cmd mise use --global direnv
+        if ! run_cmd mise use --global python@3; then
+            log_error "Failed to configure Python with mise"
+            return 1
+        fi
+        if ! run_cmd mise use --global direnv; then
+            log_error "Failed to configure direnv with mise"
+            return 1
+        fi
     fi
 
-    log_success "mise setup completed"
+    if ! setup_pvm; then
+        return 1
+    fi
+
+    log_success "Python tooling setup completed"
 }
+
+# Setup pvm shell initialization in zshrc
+ensure_pvm_shell_init() {
+    local zshrc="$HOME/.zshrc"
+    # shellcheck disable=SC2016  # Intentional literal block for .zshrc insertion
+    local pvm_init_block='export PVM_HOME="${PVM_HOME:-$HOME/.pvm}"
+if [ -f "$PVM_HOME/pvm.sh" ]; then
+  source "$PVM_HOME/pvm.sh"
+fi'
+
+    if file_exists "$zshrc"; then
+        # shellcheck disable=SC2016  # Intentional literal text search in .zshrc
+        if grep -qF 'source "$PVM_HOME/pvm.sh"' "$zshrc"; then
+            log_info "pvm shell integration already in $zshrc"
+        elif [[ "$DRY_RUN" == true ]]; then
+            log_dry "Would add pvm shell integration to $zshrc"
+        else
+            printf '\n%s\n' "$pvm_init_block" >> "$zshrc"
+            log_success "Added pvm shell integration to $zshrc"
+        fi
+    fi
+}
+
+# Setup pvm
+setup_pvm() {
+    local pvm_home="${PVM_HOME:-$HOME/.pvm}"
+    local pvm_repo_dir="${PVM_REPO_DIR:-$HOME/.local/src/pvm}"
+    local pvm_repo_url="${PVM_REPO_URL:-https://github.com/taintlesscupcake/pvm.git}"
+    local pvm_shell="$pvm_home/pvm.sh"
+    local pvm_bin="$pvm_home/bin/pvm"
+
+    local pvm_install_script="$pvm_repo_dir/scripts/install.sh"
+    local pvm_manifest="$pvm_repo_dir/Cargo.toml"
+
+    if [[ "$DRY_RUN" == true ]]; then
+        log_dry "Would ensure pvm repository exists at $pvm_repo_dir"
+        log_dry "Would build pvm with mise exec rust@stable cargo build --release"
+        log_dry "Would run pvm installer from $pvm_install_script --yes"
+        return 0
+    fi
+
+    if [[ -d "$pvm_repo_dir/.git" ]]; then
+        log_info "Updating existing pvm repository..."
+        if ! git -C "$pvm_repo_dir" pull --ff-only; then
+            log_error "Failed to update pvm repository"
+            return 1
+        fi
+    elif [[ -d "$pvm_repo_dir" ]]; then
+        log_error "PVM repository path exists but is not a git repository: $pvm_repo_dir"
+        return 1
+    else
+        log_info "Cloning pvm from $pvm_repo_url..."
+        mkdir -p "$(dirname "$pvm_repo_dir")"
+        if ! git clone "$pvm_repo_url" "$pvm_repo_dir"; then
+            log_error "Failed to clone pvm repository"
+            return 1
+        fi
+    fi
+
+    log_info "Building pvm from source..."
+    if ! command_exists mise; then
+        log_error "mise is required to build pvm"
+        return 1
+    fi
+
+    if [[ ! -f "$pvm_manifest" ]]; then
+        log_error "Missing pvm Cargo manifest: $pvm_manifest"
+        return 1
+    fi
+
+    if ! mise exec rust@stable -- cargo build --release --manifest-path "$pvm_manifest"; then
+        log_error "Failed to build pvm"
+        return 1
+    fi
+
+    log_info "Installing pvm shell integration..."
+    if [[ ! -f "$pvm_install_script" ]]; then
+        log_error "Missing pvm install script: $pvm_install_script"
+        return 1
+    fi
+
+    if ! PVM_HOME="$pvm_home" bash "$pvm_install_script" --yes; then
+        log_error "Failed to install pvm"
+        return 1
+    fi
+
+    ensure_pvm_shell_init
+
+    if [[ -x "$pvm_bin" ]]; then
+        log_success "Installed pvm binary to $pvm_bin"
+    fi
+
+    if [[ -f "$pvm_shell" ]]; then
+        log_success "Installed pvm shell integration to $pvm_shell"
+    else
+        log_warning "pvm shell integration file was not created"
+    fi
+
+    if [[ -f "$pvm_repo_dir/README_ko.md" ]]; then
+        log_info "pvm migration reference: $pvm_repo_dir/README_ko.md"
+    fi
+}
+
 
 # Copy dotfiles using symlinks
 copy_dotfiles() {

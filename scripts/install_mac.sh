@@ -35,7 +35,9 @@ run_cmd brew install \
     yazi \
     tree \
     htop \
-    unzip
+    unzip \
+    gh \
+    rustup
 
 # Install additional useful tools
 log_info "Installing additional tools..."
