@@ -18,11 +18,11 @@ fi
 
 # Update Homebrew
 log_info "Updating Homebrew..."
-brew update
+run_cmd brew update
 
 # Install essential system packages
 log_info "Installing system packages..."
-brew install \
+run_cmd brew install \
     git \
     zsh \
     neovim \
@@ -39,7 +39,7 @@ brew install \
 
 # Install additional useful tools
 log_info "Installing additional tools..."
-brew install \
+run_cmd brew install \
     ripgrep \
     fd \
     jq \
